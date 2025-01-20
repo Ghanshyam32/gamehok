@@ -1,11 +1,14 @@
 package com.jivahealth.gamehok
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
@@ -39,6 +42,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     GameHokUI()
+//                    TournamentDetailsScreen()
                 }
             }
         }
@@ -414,6 +418,8 @@ fun HorizontalScrollableCards() {
 
 @Composable
 fun TournamentCard() {
+    val context = LocalContext.current // Ensure correct context is used
+
     Box(
         modifier = Modifier
             .width(300.dp)
@@ -424,7 +430,16 @@ fun TournamentCard() {
             .clip(RoundedCornerShape(12.dp)) // Ensures the card is properly clipped
             .padding(8.dp)
     ) {
-        Column {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    // Create and launch the intent directly
+                    val intent = Intent(context, TournamentPage::class.java)
+                    context.startActivity(intent)
+                }
+                .padding(8.dp)
+        ) {
             // Image Section with Registration Open and Player Count
             Box(
                 modifier = Modifier
